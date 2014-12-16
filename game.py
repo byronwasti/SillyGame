@@ -312,8 +312,6 @@ while True:
                 keenan_pic = pygame.transform.rotate(keenan_pic, 90)
                 image_lib[3] = keenan_pic 
                 w.blit(keenan_pic, (0,0))
-            if event.key == K_q:
-                score += 10
 
 
     pygame.mouse.set_visible(False)
@@ -394,7 +392,10 @@ while True:
             bicycle.bounce()
         score += bicycle.collide(ian.pos)
 
-        make_keenan = keenan.collide(violin.pos)
+        #make_keenan = keenan.collide(violin.pos)
+        if keenan.collide(violin.pos):
+            make_keenan = True
+            violin.pos = [0,-100]
         
         brick.draw()
         make_brick = brick.move()

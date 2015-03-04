@@ -2,10 +2,12 @@ import pygame, sys
 import random
 from pygame.locals import *
 from pygame.sprite import Sprite
-#import itertools
+from movement_detect import *
 
 pygame.init()
 pygame.font.init()
+
+video = Movement_Track()
 
 fpsClock = pygame.time.Clock()
 screen = [1200,600]
@@ -13,32 +15,32 @@ font = pygame.font.SysFont("ubuntumono",screen[0]/8)
 w = pygame.display.set_mode(screen)
 #pygame.display.toggle_fullscreen()
 
-ian = pygame.image.load('IanFace.png')
+ian = pygame.image.load('images/IanFace.png')
 ian = pygame.transform.scale(ian, (100,120))
 
-violin = pygame.image.load('violin.png')
+violin = pygame.image.load('images/violin.png')
 violin = pygame.transform.scale(violin,(120,60))
 
-bicycle = pygame.image.load('bicycle.png')
+bicycle = pygame.image.load('images/bicycle.png')
 bicycle_rain = pygame.transform.scale(bicycle,(120,60))
 bicycle = pygame.transform.scale(bicycle,(150,80))
 
-keenan = pygame.image.load('keenan.png')
+keenan = pygame.image.load('images/keenan.png')
 keenan_pic = pygame.transform.scale(keenan,(200,260))
 
-puzzle = pygame.image.load('puzzle.png')
+puzzle = pygame.image.load('images/puzzle.png')
 puzzle = pygame.transform.scale(puzzle,screen)
 
-chicken = pygame.image.load('chicken.png')
+chicken = pygame.image.load('images/chicken.png')
 chicken = pygame.transform.scale(chicken,(200,100))
 
-bananasub = pygame.image.load('bananasub.png')
+bananasub = pygame.image.load('images/bananasub.png')
 bananasub = pygame.transform.scale(bananasub,(200,100))
 
-emu = pygame.image.load('emu.png')
+emu = pygame.image.load('images/emu.png')
 emu = pygame.transform.scale(emu,(600,600))
 
-spaceship = pygame.image.load('spaceship.png')
+spaceship = pygame.image.load('images/spaceship.png')
 spaceship = pygame.transform.scale(spaceship,(100,100))
 
 image_lib = { 0: ian, 1: violin, 2: bicycle, 3: keenan_pic, 4: chicken, 5: bananasub, 6: emu, 7: spaceship }
@@ -140,7 +142,6 @@ class keenan_class(object_class):
         if self.pos[0] < 0: self.pos[0] = screen[0]
 
     def collide(self,pos):
-        #if pos[0] -1 < self.pos[0] < pos[0] + 100 and pos[1] - 100 < self.pos[1] < pos[1] + 10:
         if self.pos[0] <= pos[0] + 120 <= self.pos[0] + 200 and self.pos[1] <= pos[1] + 30 <= self.pos[1] + 260:
             return 1
         else: return 0
@@ -291,6 +292,7 @@ while True:
         keenan_rotate = 20
     if score > 50:
         win = True
+    if video.Movement(): ian.jump_check = 10
 
     for event in pygame.event.get():
         if event.type == QUIT:
